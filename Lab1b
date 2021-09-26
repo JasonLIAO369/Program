@@ -1,0 +1,36 @@
+int main(void)
+{
+    /* Replace with your application code */
+  DDRD = 0xFF;
+  DDRB=0x00;
+  int status=0;
+  int switchled=0;
+  while(1)
+  {
+	  
+	  
+	  if(PINB &(1<<PINB0)){
+		  status=1;
+	  }else{
+		  if(status==1){
+			  if(switchled==0){
+			  		   switchled=1;
+			  }else{
+				  switchled=0;
+			  }
+			  status=0;	  }
+	  }
+ 
+	  
+	  
+	  if(switchled==1){
+		  PORTD=0xFF;
+
+	  }else{
+		  PORTD=0x00;
+	  }
+	  
+	
+  }
+
+}
