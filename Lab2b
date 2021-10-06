@@ -1,0 +1,127 @@
+
+
+#include <avr/io.h>
+void T0Delay();
+void T0DelayCTC();
+void Blinking();
+void BlinkingCTC();
+
+int main(void)
+{
+    /* Replace with your application code */
+	DDRB=0xFF;
+	DDRC=0xFF;
+	/*TCCR0A = 0x82;
+	TCCR0B = 0x87;
+	TIMSK0 = 0x02;
+	OCR0A = 0x02;
+	sei();
+	DDRD = 0x00;
+	DDRC = 0x0F;*/
+	
+	PORTC = 0;
+    while (1) 
+    {
+	
+		
+		
+		PORTB^=(1<<0);
+		PORTB^=(1<<5);
+		PORTC^=(1<<4);
+		for(int i=0;i<5;i++){
+		T0DelayCTC();}
+		
+		PORTB&=~(1<<5);
+		PORTB^=(1<<4);
+		T0DelayCTC();
+		
+		PORTB&=~(1<<4);
+		PORTB^=(1<<3);
+		T0DelayCTC();
+		
+		PORTB^=(1<<1);
+		T0DelayCTC();
+		
+		PORTC^=(1<<4);
+		PORTC^=(1<<5);
+		PORTB^=(1<<0);
+		PORTB^=(1<<1);
+		PORTB^=(1<<2);
+	    for(int i=0;i<6;i++){
+				T0DelayCTC();}
+		
+		PORTB^=(1<<2);
+		PORTB^=(1<<1);		
+		for (int i = 0 ;i<7;i++)
+		{
+			
+			
+			BlinkingCTC();
+			PORTC = PORTC^(1<<5);
+		}
+			
+		 T0Delay();
+		
+		PORTC ^= (1<<4);
+		PORTB^=(1<<1);	
+		PORTB^=(1<<0);	
+		//PORTB ^= (1<<3);
+		 T0DelayCTC();
+		
+		PORTB ^= (1<<4);
+		 T0DelayCTC();	
+		 PORTB=0x00;
+		 PORTC=0x00;
+		 
+    }
+}
+
+void T0Delay(){
+	
+	for(int i=0;i<100;i++){
+		
+		TCNT0=100;
+		TCCR0B=0x05;
+		while((TIFR0 &(1<<TOV0))==0);
+		TCCR0B=0;
+		TIFR0=0x1;
+	}
+	
+}
+
+void Blinking(){
+	for(int i = 0;i<8;i++){
+		TCNT0 = 0x00;
+		TCCR0B = 0x05;
+		while((TIFR0&(1<<TOV0))==0);
+		TCCR0B = 0;
+		TIFR0 = (1<<TOV0);
+		
+	}
+}
+
+void BlinkingCTC(){
+	for(int i = 0;i<8;i++){
+		OCR0A = 255;
+		TCCR0A = 0x02;
+		TCCR0B = 0x05;
+		while((TIFR0&(1<<OCF0A))==0);
+		TCCR0B = 0;
+		TIFR0 = 0x02;
+		
+	}
+}
+
+void T0DelayCTC(){
+
+	for(int i = 0;i<100;i++){
+		OCR0A = 156;
+		TCCR0A = 0x02;
+		TCCR0B = 0x05;
+		while((TIFR0&(1<<OCF0A))==0);
+		TCCR0B = 0;
+	    TIFR0 = 0x02;
+		PORTC=PORTC^(1<0);
+}
+}
+
