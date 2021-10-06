@@ -1,0 +1,55 @@
+/*
+ * Lab2C.c
+ *
+ * Created: 2020/10/15 20:50:22
+ * Author : Jason Liao
+ */ 
+
+#include <avr/io.h>
+#include "avr/interrupt.h"
+
+int main(void)
+{
+        
+		TCCR0A = 0x82;
+		TCCR0B = 0x87;
+		TIMSK0 = 0x02;
+		OCR0A = 0x02;
+		sei();
+		DDRD = 0x00;
+		DDRC = 0x0F;
+		
+		PORTC = 0;
+		while(1)
+		{
+		}
+	}
+
+	/*ISR (TIMER0_COMPA_vect)
+	{
+		if(PORTC == 0)
+		{
+			
+			PORTC = 0x01;
+		}
+		else
+		{
+			
+			PORTC = 0x00;
+		}
+	}*/
+	
+	ISR (TIMER0_COMPA_vect)
+	{
+		if((PORTC &(1<<0))==0)
+		{
+			
+			PORTC ^= (1<<0);
+		}
+		else
+		{
+			
+			PORTC &=~(1<<0);
+		}
+	}
+
