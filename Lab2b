@@ -1,4 +1,9 @@
-
+/*
+ * Lab2B.c
+ *
+ * Created: 2020/10/15 14:03:53
+ * Author : Jason Liao
+ */ 
 
 #include <avr/io.h>
 void T0Delay();
@@ -25,21 +30,21 @@ int main(void)
 	
 		
 		
-		PORTB^=(1<<0);
-		PORTB^=(1<<5);
-		PORTC^=(1<<4);
+		PORTB^=(1<<1);// light3 PB1 red
+		PORTB^=(1<<3);// light2 PB3 green
+		PORTC^=(1<<5);// light1 PC5 red
 		for(int i=0;i<5;i++){
 		T0DelayCTC();}
 		
-		PORTB&=~(1<<5);
-		PORTB^=(1<<4);
+		PORTB&=~(1<<3);// clear light2 PB3 green
+		PORTB^=(1<<5);// light2 PB5 Yellow
 		T0DelayCTC();
 		
-		PORTB&=~(1<<4);
-		PORTB^=(1<<3);
+		PORTB&=~(1<<5); //clear light2 PB5 Yellow
+		PORTB^=(1<<4);// light2 PB4 red
 		T0DelayCTC();
 		
-		PORTB^=(1<<1);
+		PORTB^=(1<<2);
 		T0DelayCTC();
 		
 		PORTC^=(1<<4);
@@ -50,25 +55,26 @@ int main(void)
 	    for(int i=0;i<6;i++){
 				T0DelayCTC();}
 		
-		PORTB^=(1<<2);
-		PORTB^=(1<<1);		
+		PORTB^=(1<<0);
+		PORTB^=(1<<2);		
 		for (int i = 0 ;i<7;i++)
 		{
 			
 			
 			BlinkingCTC();
-			PORTC = PORTC^(1<<5);
+			PORTC = PORTC^(1<<4);
 		}
 			
-		 T0Delay();
+		 //T0Delay();
 		
-		PORTC ^= (1<<4);
+		PORTC &= ~(1<<4);
+		PORTC ^= (1<<5);
+		PORTB^=(1<<2);	
 		PORTB^=(1<<1);	
-		PORTB^=(1<<0);	
 		//PORTB ^= (1<<3);
 		 T0DelayCTC();
 		
-		PORTB ^= (1<<4);
+		PORTB ^= (1<<5);
 		 T0DelayCTC();	
 		 PORTB=0x00;
 		 PORTC=0x00;
