@@ -1,9 +1,4 @@
-/*
- * Lab3A.c
- *
- * Created: 2020/10/29 13:05:42
- * Author : Jason Liao
- */ 
+
 
 #include <avr/io.h>
 #include "avr/interrupt.h"
